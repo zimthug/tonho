@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Clazz, Term, TermClazz
+from .models import Clazz, ClazzRoom, Term, TermClazz
 
 
 admin.site.register(Clazz)
@@ -22,3 +22,9 @@ class TermClazzAdmin(admin.ModelAdmin):
 
     def end_on(self, obj):
         return obj.end_date
+
+
+@admin.register(ClazzRoom)
+class ClazzRoomAdmin(admin.ModelAdmin):
+    list_display = ('clazz', 'name', 'description')
+    list_filter = ('clazz', 'name')

@@ -5,7 +5,7 @@ from django.db import models
 class BaseModel(models.Model):
     """Abstract base model with common fields for model tables."""
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField(auto_now=True, blank=True, editable=False)
     created_by = models.UUIDField(null=True, blank=True, editable=False)
     updated_by = models.UUIDField(null=True, blank=True, editable=False)
 

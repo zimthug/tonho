@@ -1,6 +1,12 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 
 from core.models import SequenceBaseModelMixin
+
+
+def validate_year(value):
+    if not (1960 <= value <= 2200):
+        raise ValidationError(f"The year must be between 1960 and 2200, got {value}.")
 
 
 class Clazz(SequenceBaseModelMixin):
@@ -16,8 +22,23 @@ class Clazz(SequenceBaseModelMixin):
         return self.name
 
 
+class ClazzRoom(SequenceBaseModelMixin):
+    clazz = models.ForeignKey(Clazz, on_delete=models.CASCADE)
+    name = models.CharField(max_length=30)
+    description = models.CharField(max_length=120, blank=True, null=True)
+
+    class Meta:
+        verbose_name = 'Class Room'
+        verbose_name_plural = 'Class Rooms'
+        db_table = 'clazz_room'
+        unique_together = ('clazz', 'name')
+
+    def __str__(self):
+        return f"{self.clazz}, {self.name}"
+
+
 class Term(SequenceBaseModelMixin):
-    year = models.IntegerField()
+    year = models.IntegerField(validators=[validate_year])
     name = models.CharField(max_length=30)
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
