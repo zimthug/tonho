@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useLocation } from "react-router-dom";
 import GlobalStyles from '@mui/joy/GlobalStyles';
 import Avatar from '@mui/joy/Avatar';
 import Box from '@mui/joy/Box';
@@ -34,6 +35,7 @@ import ColorSchemeToggle from './ColorSchemeToggle';
 import { closeSidebar } from '../utils';
 import { Logo } from './Logo';
 import routes from '../../routes';
+// import { common } from '@mui/material/colors';
 
 
 function Toggler({
@@ -71,6 +73,7 @@ function Toggler({
 }
 
 function Sidebar() {
+    const location = useLocation();
     return (
         <Sheet
             className="Sidebar"
@@ -150,7 +153,10 @@ function Sidebar() {
                     }}
                 >
                     <ListItem>
-                        <ListItemButton>
+                        <ListItemButton
+                            selected={location.pathname === routes.HOME}
+                            component="a"
+                            href={routes.HOME}>
                             <HomeRoundedIcon />
                             <ListItemContent>
                                 <Typography level="title-sm">Home</Typography>
@@ -201,6 +207,7 @@ function Sidebar() {
 
                     <ListItem nested>
                         <Toggler
+                            defaultExpanded={location.pathname === routes.STUDENT || location.pathname === routes.PARENT}
                             renderToggle={({ open, setOpen }) => (
                                 <ListItemButton onClick={() => setOpen(!open)}>
                                     <LocalLibraryRoundedIcon />
@@ -217,16 +224,17 @@ function Sidebar() {
                         >
                             <List sx={{ gap: 0.5 }}>
                                 <ListItem sx={{ mt: 0.5 }}>
-                                    <ListItemButton>All tasks</ListItemButton>
+                                    <ListItemButton selected={location.pathname === routes.STUDENT}
+                                    component="a"
+                                    href={routes.STUDENT}
+                                    >Students
+                                    </ListItemButton>
                                 </ListItem>
                                 <ListItem>
-                                    <ListItemButton>Backlog</ListItemButton>
-                                </ListItem>
-                                <ListItem>
-                                    <ListItemButton>In progress</ListItemButton>
-                                </ListItem>
-                                <ListItem>
-                                    <ListItemButton>Done</ListItemButton>
+                                    <ListItemButton selected={location.pathname === routes.PARENT}
+                                        component="a"
+                                        href={routes.PARENT}
+                                    >Parents</ListItemButton>
                                 </ListItem>
                             </List>
                         </Toggler>
@@ -366,7 +374,7 @@ function Sidebar() {
 
                     <ListItem nested>
                         <Toggler
-                            defaultExpanded
+                            defaultExpanded={location.pathname === routes.SCHOOL_CALENDAR}
                             renderToggle={({ open, setOpen }) => (
                                 <ListItemButton onClick={() => setOpen(!open)}>
                                     <HomeWorkRoundedIcon />
@@ -383,7 +391,7 @@ function Sidebar() {
                         >
                             <List sx={{ gap: 0.5 }}>
                                 <ListItem sx={{ mt: 0.5 }}>
-                                    <ListItemButton selected
+                                    <ListItemButton selected={location.pathname === routes.SCHOOL_CALENDAR}
                                     component="a"
                                     href={routes.SCHOOL_CALENDAR}>Calendar</ListItemButton>
                                 </ListItem>
