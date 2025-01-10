@@ -47,7 +47,7 @@ const PageHeader: React.FC<{ breadcrumbs: any[]; title: string }> = ({ breadcrum
 PageHeader.propTypes = {
   breadcrumbs: PropTypes.arrayOf(
     PropTypes.shape({
-      label: PropTypes.string.isRequired,
+      label: PropTypes.node.isRequired,
       href: PropTypes.string,
       icon: PropTypes.node,
     })
